@@ -2,11 +2,12 @@
 1. Implement Stack ADT
 2. Take a number as input and implement a method using a stack to decide whether the number is palindrome or not.
 3. Implement a method using a stack that reverses every n digits of a number. and do not reverse where length is lesser. Returns reversed number
-Example: Input: 3
-		12345678     Output: 32165478
+## Example: 
+Input: 3 12345678     
+Output: 32165478
 4. Write a function using your stack class/template to check if input(string/char array) contains balanced parenthesis or not.
 Note: Change your stack class/template from previous lab accordingly to manage string/char array as input
-
+## Example:
 Input: exp = “[()]{}{[()()]()}” 
 Output: Balanced
 Input: exp = “[3*(1+2)^2022]/{7+11}” 
