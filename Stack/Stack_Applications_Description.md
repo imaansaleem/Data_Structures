@@ -1,3 +1,4 @@
+## Objectives
 1. Implement Stack ADT
 2. Take a number as input and implement a method using a stack to decide whether the number is palindrome or not.
 3. Implement a method using a stack that reverses every n digits of a number. and do not reverse where length is lesser. Returns reversed number
