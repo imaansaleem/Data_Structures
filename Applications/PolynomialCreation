@@ -1,0 +1,128 @@
+#include<iostream>
+#include<cmath>
+
+using namespace std;
+
+class Polynomial{
+	int Max_power;
+	int *Coefficients;
+	
+	public:
+	Polynomial(){ }
+	Polynomial(int power, int* coefficients){
+		Max_power=power;
+		Coefficients= new int[power+1];
+		for(int i=0;i<=power;i++)
+			Coefficients[i]=coefficients[i];
+	}
+	
+	Polynomial Add_Polynomial(Polynomial P){
+		Polynomial result;
+		int second=Max_power;
+		result.Max_power=P.Max_power;
+		if(Max_power>P.Max_power){
+			second=P.Max_power;
+			result.Max_power=Max_power;
+		}
+		result.Coefficients=new int[result.Max_power+1];
+		
+		if(Max_power<result.Max_power)
+			for(int i=second+1;i<=result.Max_power;i++)
+				result.Coefficients[i]=P.Coefficients[i];
+		else
+			for(int i=second+1;i<=result.Max_power;i++)
+				result.Coefficients[i]=Coefficients[i];
+				
+		for(int i=0;i<=second;i++)
+			result.Coefficients[i]=Coefficients[i]+P.Coefficients[i];
+		return result;
+	}
+	
+	Polynomial Sub_Polynomial(Polynomial P){
+		Polynomial result;
+		int second=Max_power;
+		result.Max_power=P.Max_power;
+		if(Max_power>P.Max_power){
+			second=P.Max_power;
+			result.Max_power=Max_power;
+		}
+		result.Coefficients=new int[result.Max_power+1];
+		
+		if(Max_power<result.Max_power)
+			for(int i=second+1;i<=result.Max_power;i++)
+				result.Coefficients[i]=(P.Coefficients[i])*(-1);
+		else
+			for(int i=second+1;i<=result.Max_power;i++)
+				result.Coefficients[i]=Coefficients[i];
+				
+		for(int i=0;i<=second;i++)
+			result.Coefficients[i]=Coefficients[i]-P.Coefficients[i];
+		return result;
+	}
+	
+	Polynomial Mul_Polynomial(Polynomial P){
+		Polynomial result;
+		int k=1,i, l;
+		int size=(Max_power+1)*(P.Max_power+1);
+		result.Max_power=Max_power+P.Max_power;
+		result.Coefficients=new int[size];
+		for(i=0;i<=Max_power;i++){
+			for(int j=0;j<=P.Max_power;j++)
+				result.Coefficients[i*(P.Max_power+1)+j]=Coefficients[i]*P.Coefficients[j];
+		
+			if(i>0){
+					for(int j=k, l=0;j<=P.Max_power+k;l++, j++){
+						if(j>=P.Max_power+k)
+							result.Coefficients[j] = 0;
+						result.Coefficients[j]+=result.Coefficients[i*(P.Max_power+1)+l];
+					}
+					k++;
+				}	
+			}
+		
+		return result;
+	}
+	
+	int Evaluate(int x){
+		int sum=0;
+		for(int i=Max_power;i>=0;i--)
+			sum=sum+pow(x,i)*Coefficients[i];
+		return sum;
+	}
+	
+	
+	void show(){
+		for(int i=0;i<=Max_power;i++){
+			if(Coefficients[i]>0){
+				cout << Coefficients[i] << "x^" << Max_power-i;
+				if(i<Max_power)
+					cout << "+";
+			}
+			else
+				cout << Coefficients[i] << "x^" << Max_power-i;
+		}
+		cout << endl;
+	}
+};
+
+int main()
+{
+	int coefficients1[]={2,3,2}; 
+	int coefficients2[]={3,2,4,1};
+	Polynomial P1(2,coefficients1);
+	Polynomial P2(3,coefficients2);
+	Polynomial P3=P1.Add_Polynomial(P2);
+	cout << "Polynomials: "<<endl;
+	P1.show();
+	P2.show();
+	cout << "\nAddition of Polynomial: ";
+	P3.show();
+	Polynomial P4=P1.Sub_Polynomial(P2); //p1-p2
+	cout << "\nSubtraction of Polynomial: ";
+	P4.show();
+	Polynomial P5=P1.Mul_Polynomial(P2);
+	cout << "\nMultiplication of Polynomial: ";
+	P5.show();
+	cout << "\nEvaluate: "<< P1.Evaluate(2);
+	return 0;
+}
